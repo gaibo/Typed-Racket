@@ -1,0 +1,71 @@
+#lang typed/racket
+(require typed/test-engine/racket-tests)
+
+;; Gaibo Zhang
+;; Wachs 151
+;; Lab 6
+
+
+;; === polymorphic data structures (broadly useful)
+
+(define-struct (a b) Pair
+  ([first  : a]
+   [second : b])
+  #:transparent)
+
+(define-type (Maybe a) (U 'Nothing (Just a)))
+
+(define-struct (a) Just
+  ([x : a])
+  #:transparent)
+
+(define-type Order (U 'Less 'Equal 'Greater))
+
+(define-type (Cmp a) (a a -> Order))
+
+
+;; === BST map data structures
+
+(define-struct (key val) BSTMap
+  ([compare : (Cmp key)]
+   [data    : (BST key val)])
+  #:transparent)
+
+(define-type (BST key val) (U 'E (Node key val)))
+;; note the symbol 'E is used for the empty tree
+
+(define-struct (key val) Node
+  ([root : key]
+   [v    : val]
+   [lsub : (BST key val)]
+   [rsub : (BST key val)])
+  #:transparent)
+
+
+;; === BST map operations
+
+(: map-apply : (All (key val) (BSTMap key val) key -> (Maybe val)))
+;; if the key is present in the tree, return the associated value in a Just;
+;; otherwise, return 'Nothing
+(define (map-apply m k)
+  (match m
+    [(BSTMap cmp t)
+     (local
+       {(: lp : (BST key val) -> (Maybe val))
+        ;; search for k in t
+        (define (lp t)
+          (match t
+            ['E 'Nothing]
+            [(Node r v tl tr)
+             (match (cmp k r)
+               ['Less (lp tl)]
+               ['Equal (Just v)]
+               ['Greater (lp tr)])]))}
+       (lp t))]))
+
+(: insert : (All (key val) (BSTMap key val) key val -> (BSTMap key val)))
+;; insert key/value pair at the correct position in the tree; if key is already
+;; present, replace it
+(define (insert m k v)
+  (match m
+    [(BSTMap cmp t)

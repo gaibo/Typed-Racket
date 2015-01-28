@@ -1,0 +1,19 @@
+#lang typed/racket
+(require typed/test-engine/racket-tests)
+(require/typed 2htdp/image
+  [#:opaque Image image?]
+  [overlay (-> Image Image Image)]
+  [empty-image Image]
+  [circle (-> Integer String String Image)]
+  [square (-> Integer String String Image)]
+  [rectangle (-> Integer Integer String String Image)]
+  [triangle (-> Integer String String Image)]
+  [star(-> Integer String String Image)]
+  [radial-star (-> Integer Integer Integer String String Image)])
+
+
+ ;; ==== Problem 1 ====
+
+(: concentric-circles (-> String Integer Integer Image))
+;; consume a color name, a max radius, and a delta of radius decrease at each
+;; step and produce concentric circles

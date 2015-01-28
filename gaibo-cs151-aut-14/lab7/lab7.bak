@@ -1,0 +1,13 @@
+#lang typed/racket
+(require typed/test-engine/racket-tests)
+(require/typed 2htdp/image
+   [#:opaque Image image?]
+   [text (-> String Number String Image)]
+   [beside (-> Image * Image)]
+   [above (-> Image * Image)]
+   [bitmap/url (-> String Image)])
+
+;; Gaibo Zhang
+;; Lab 7
+;; CS151 Wachs
+

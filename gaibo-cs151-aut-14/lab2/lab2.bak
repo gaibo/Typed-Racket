@@ -1,0 +1,57 @@
+#lang typed/racket
+(require typed/test-engine/racket-tests)
+
+(: leap? : Integer -> Boolean)
+;; determine whether a year is a leap year
+(define (leap? year)
+  (or (and (= 0 (remainder year 4))
+           (not (= 0 (remainder year 100))))
+      (= 0 (remainder year 400))))
+;; TESTS
+(check-expect (leap? 1) #f)
+(check-expect (leap? 200) #f)
+(check-expect (leap? 2000) #t)
+(check-expect (leap? 2004) #t)
+
+
+(: date-valid? : Integer Integer Integer -> Boolean)
+;; determine whether a given month, day, year combination is a possible date
+(define (date-valid? month day year)
+  (cond
+    [(< year 1900) #f]
+    [(or (> day 31) (< day 1)) #f]
+    [(or (> month 12) (< month 1)) #f]
+    [(and (or (= month 4) (= month 6) (= month 9) (= month 11)) (= day 31)) #f]
+    [(and (= month 2) (> day 29)) #f]
+    [(and (= month 2) (equal? (leap? year) #f) (= day 29)) #f]
+    [else #t]))
+;; TESTS
+(check-expect (date-valid? 1 1 1) #f)
+(check-expect (date-valid? 1 31 1900) #t)
+(check-expect (date-valid? 4 31 2003) #f)
+(check-expect (date-valid? 2 29 2000) #t)
+(check-expect (date-valid? 2 29 1900) #f)
+(check-expect (date-valid? 8 31 2014) #t)
+
+
+(: day-of-week : Integer Integer Integer -> String)
+;; determine the day of the week of a given month, day, year
+(define (day-of-week m d y)
+  (cond
+    [(= (remainder (n m d y) 7) 0) "Sunday"]
+    [(= (remainder (n m d y) 7) 1) "Monday"]
+    [(= (remainder (n m d y) 7) 2) "Tuesday"]
+    [(= (remainder (n m d y) 7) 3) "Wednesday"]
+    [(= (remainder (n m d y) 7) 4) "Thursday"]
+    [(= (remainder (n m d y) 7) 5) "Friday"]
+    [(= (remainder (n m d y) 7) 6) "Saturday"]))
+;; TESTS
+(check-expect (day-of-week 10 8 2014) "Wednesday")
+(check-expect (day-of-week 10 9 2014) "Thursday")
+
+(: n : Integer Integer Integer -> String)
+;; [AUX] calculate n according to formula n = (y - 1900) + j + d + floor(y/4),
+;; where j is given by the table on the lab page
+
+
+(test)

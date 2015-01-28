@@ -1,0 +1,23 @@
+This file has been automatically generated for "gaibo" on Dec 3, 2014.
+
+Here is a summary of your graded work thus far.
+
+gaibo,exam1,87,100
+gaibo,hw1,97,100
+gaibo,hw2,96,100
+gaibo,hw3,91.5,100
+gaibo,hw4,100,100
+gaibo,hw5,50,50
+gaibo,lab2,97,100
+gaibo,lab3,100,100
+gaibo,lab4,100,100
+gaibo,lab5,100,100
+gaibo,lab6,99,100
+gaibo,lab7,50,50
+gaibo,projA,100,150
+
+Of the course credit available so far, you have earned about 90.33% of it
+(taking weights into account).
+
+Please note: since this percentage does not include any work yet to be graded,
+it is likely to change before we compute grades.

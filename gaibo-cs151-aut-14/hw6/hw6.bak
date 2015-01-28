@@ -1,0 +1,30 @@
+#lang typed/racket
+(require typed/test-engine/racket-tests)
+
+;; ==== Problem 1 ====
+
+(define-type Exp (U Literal Operation Local BoundId))
+
+(define-struct Literal
+  ([val : Integer])
+  #:transparent)
+
+(define-type Operator (U '+ '*))
+
+(define-struct Operation
+  ([op : Operator]
+   [es : (Listof Exp)]
+   [en : Exp])
+  #:transparent)
+
+(define-type Identifier String)
+
+(define-struct Local
+  ([id  : Identifier]
+   [val : Exp]
+   [in  : Exp])
+  #:transparent)
+
+(define-struct BoundId
+  ([id : Identifier])
+  #:transparent)

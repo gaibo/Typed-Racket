@@ -1,0 +1,17 @@
+#lang typed/racket
+(require typed/test-engine/racket-tests)
+
+
+;; ==== Problem 1 ====
+
+;; Postponed
+
+
+;; ==== Problem 2 ====
+
+(define-type Nat (U 'Zero Succ))
+
+(define-struct Succ
+  ([prev : Nat])
+  #:transparent)
+
